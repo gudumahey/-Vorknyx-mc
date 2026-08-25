@@ -3,43 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>VØRKNYX MC</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
 body{
- min-height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
- text-align:center;
- color:white;
- background:
- linear-gradient(#0009,#000d),
- url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
- center/cover;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+    color:white;
+
+    background:
+    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+    center/cover;
 }
+
 .box{
- width:92%;
- max-width:600px;
- padding:45px 25px;
- background:#111c;
- border:1px solid #444;
- border-radius:25px;
- backdrop-filter:blur(12px);
+    width:100%;
+    max-width:600px;
+    padding:45px 30px;
+
+    text-align:center;
+
+    background:rgba(17,17,17,.88);
+    border:1px solid #333;
+    border-radius:25px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.6);
 }
-.logo{font-size:42px;font-weight:900;margin-bottom:12px}
-p{color:#aaa;margin-bottom:30px}
+
+.logo{
+    font-size:42px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.subtitle{
+    color:#999;
+    margin-bottom:30px;
+    font-size:16px;
+}
+
 button{
- width:100%;
- max-width:350px;
- padding:15px;
- border:0;
- border-radius:12px;
- background:white;
- color:black;
- font-weight:bold;
- cursor:pointer;
+    width:100%;
+    max-width:380px;
+    padding:15px;
+
+    border:0;
+    border-radius:12px;
+
+    font-size:15px;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.google{
+    background:white;
+    color:black;
+}
+
+.login{
+    margin-top:12px;
+    background:#222;
+    color:white;
+    border:1px solid #444;
+}
+
+#message{
+    margin-top:18px;
+    min-height:20px;
+    font-size:14px;
 }
 </style>
 </head>
@@ -47,13 +101,188 @@ button{
 <body>
 
 <div class="box">
-<h1 class="logo">⚡ VØRKNYX MC</h1>
-<p>Lifesteal Network • Creator Portal</p>
 
-<button onclick="location.href='login.html'">
-LOGIN / CONTINUE
-</button>
+    <div class="logo">
+        ⚡ VØRKNYX MC
+    </div>
+
+    <div class="subtitle">
+        Lifesteal Network • Creator Portal
+    </div>
+
+
+    <!-- GOOGLE LOGIN -->
+
+    <button
+        class="google"
+        id="googleBtn">
+
+        🔵 Continue with Google
+
+    </button>
+
+
+    <!-- NORMAL LOGIN -->
+
+    <button
+        class="login"
+        onclick="location.href='login.html'">
+
+        LOGIN WITH EMAIL
+
+    </button>
+
+
+    <div id="message"></div>
+
 </div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/*
+    SAME FIREBASE CONFIG
+    AS YOUR LOGIN/SIGNUP
+*/
+
+const firebaseConfig = {
+
+    apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+
+    authDomain:"vorknyx-mc.firebaseapp.com",
+
+    projectId:"vorknyx-mc",
+
+    storageBucket:"vorknyx-mc.firebasestorage.app",
+
+    messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+
+    appId:"YOUR_APP_ID"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const auth =
+getAuth(app);
+
+
+const message =
+document.getElementById("message");
+
+
+/*
+    GOOGLE LOGIN
+*/
+
+document
+.getElementById("googleBtn")
+.addEventListener("click",async()=>{
+
+    try{
+
+        message.style.color="#aaa";
+
+        message.textContent=
+        "Opening Google...";
+
+
+        const provider =
+        new GoogleAuthProvider();
+
+
+        /*
+            THIS IS THE SAME METHOD
+            THAT WORKS ON SIGNUP
+        */
+
+        await signInWithPopup(
+            auth,
+            provider
+        );
+
+
+        message.style.color="#7cff8b";
+
+        message.textContent=
+        "Login successful! Redirecting...";
+
+
+        setTimeout(()=>{
+
+            /*
+                IMPORTANT:
+                GO DIRECTLY TO DASHBOARD
+            */
+
+            window.location.href=
+            "dashboard.html";
+
+        },700);
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Google Login Error:",
+            error
+        );
+
+
+        message.style.color="#ff7777";
+
+
+        if(
+            error.code ===
+            "auth/popup-closed-by-user"
+        ){
+
+            message.textContent=
+            "Google login cancelled.";
+
+        }
+
+        else if(
+            error.code ===
+            "auth/popup-blocked"
+        ){
+
+            message.textContent=
+            "Google popup was blocked. Please allow popups.";
+
+        }
+
+        else{
+
+            message.textContent=
+            "Google Login Error: "+
+            error.message;
+
+        }
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>

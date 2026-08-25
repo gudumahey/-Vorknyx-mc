@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Media Application | VØRKNYX MC</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:white;
+    padding:30px 0;
+    background:
+    linear-gradient(#000b,#000e),
+    url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+    center/cover fixed;
+}
+
+.box{
+    width:92%;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    background:#111e;
+    border:1px solid #333;
+    border-radius:22px;
+    backdrop-filter:blur(12px);
+}
+
+h1{
+    text-align:center;
+    font-size:30px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#999;
+    margin:10px 0 30px;
+}
+
+.section{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid #333;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    line-height:1.4;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:14px;
+    margin-bottom:20px;
+    border:1px solid #333;
+    outline:none;
+    border-radius:11px;
+    background:#1d1d1d;
+    color:white;
+}
+
+textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:12px;
+    background:white;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back{
+    background:#222;
+    color:white;
+    border:1px solid #444;
+    margin-top:10px;
+}
+
+#msg{
+    text-align:center;
+    margin-top:18px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>📸 Media Application</h1>
+
+<div class="subtitle">
+VØRKNYX MC Creator Team
+</div>
+
+<input id="minecraftUsername" placeholder="Minecraft Username">
+
+<input id="discord" placeholder="Discord Username">
+
+<input id="contentLink" placeholder="Your best previous content link">
+
+<select id="platform">
+    <option value="">Select your main platform</option>
+    <option>YouTube</option>
+    <option>TikTok</option>
+    <option>Instagram</option>
+    <option>Other</option>
+</select>
+
+
+<div class="section">
+
+<label>
+1. You are given permission to record on the server, but another creator releases a very similar video before you. What would you change in your content strategy instead of simply copying their idea?
+</label>
+
+<textarea id="q1" placeholder="Write your answer..."></textarea>
+
+
+<label>
+2. A video gets very low views even though you believe the content is good. Explain the exact steps you would take to analyse the failure and improve your next upload.
+</label>
+
+<textarea id="q2" placeholder="Write your answer..."></textarea>
+
+
+<label>
+3. Imagine you accidentally record private information belonging to another player in your footage. What would you do before publishing the video, and why?
+</label>
+
+<textarea id="q3" placeholder="Write your answer..."></textarea>
+
+
+<label>
+4. VØRKNYX MC is having a major event tomorrow, but you only have a few hours to create content. Explain how you would plan, record and publish useful content within that limited time.
+</label>
+
+<textarea id="q4" placeholder="Write your answer..."></textarea>
+
+
+<label>
+5. A member of the community asks you to create misleading content about the server because they believe it will get more views. Would you accept? Explain your decision and how you would handle the situation.
+</label>
+
+<textarea id="q5" placeholder="Write your answer..."></textarea>
+
+
+<label>
+6. Why should VØRKNYX MC choose you over another creator with better editing skills but less understanding of the community? Give a specific reason and example.
+</label>
+
+<textarea id="q6" placeholder="Write your answer..."></textarea>
+
+</div>
+
+
+<button id="submit">
+SUBMIT MEDIA APPLICATION
+</button>
+
+<button class="back" onclick="location.href='dashboard.html'">
+← BACK TO DASHBOARD
+</button>
+
+<div id="msg"></div>
+
+</div>
+
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig={
+apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+authDomain:"vorknyx-mc.firebaseapp.com",
+projectId:"vorknyx-mc",
+storageBucket:"vorknyx-mc.firebasestorage.app",
+messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+appId:"YOUR_APP_ID"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+let currentUser=null;
+
+onAuthStateChanged(auth,user=>{
+
+    if(!user){
+        location.href="login.html";
+        return;
+    }
+
+    currentUser=user;
+
+});
+
+
+document.getElementById("submit").onclick=async()=>{
+
+    if(!currentUser){
+        alert("Please login first.");
+        return;
+    }
+
+    const username=
+    document.getElementById("minecraftUsername").value.trim();
+
+    const discord=
+    document.getElementById("discord").value.trim();
+
+    const contentLink=
+    document.getElementById("contentLink").value.trim();
+
+    const platform=
+    document.getElementById("platform").value;
+
+    const answers=[
+        document.getElementById("q1").value.trim(),
+        document.getElementById("q2").value.trim(),
+        document.getElementById("q3").value.trim(),
+        document.getElementById("q4").value.trim(),
+        document.getElementById("q5").value.trim(),
+        document.getElementById("q6").value.trim()
+    ];
+
+    if(
+        !username ||
+        !discord ||
+        !contentLink ||
+        !platform ||
+        answers.some(answer=>answer.length<30)
+    ){
+
+        const msg=document.getElementById("msg");
+
+        msg.style.color="#ff7777";
+
+        msg.textContent=
+        "Please complete every question with a detailed answer (minimum 30 characters).";
+
+        return;
+    }
+
+    try{
+
+        await addDoc(
+            collection(db,"mediaApplications"),
+            {
+                uid:currentUser.uid,
+                email:currentUser.email,
+                displayName:currentUser.displayName || "",
+
+                minecraftUsername:username,
+                discord:discord,
+                previousContent:contentLink,
+                platform:platform,
+
+                question1:answers[0],
+                question2:answers[1],
+                question3:answers[2],
+                question4:answers[3],
+                question5:answers[4],
+                question6:answers[5],
+
+                status:"Pending",
+                createdAt:serverTimestamp()
+            }
+        );
+
+        const msg=document.getElementById("msg");
+
+        msg.style.color="#7cff8b";
+        msg.textContent=
+        "✅ Media application submitted successfully!";
+
+    }catch(error){
+
+        console.error(error);
+
+        const msg=document.getElementById("msg");
+
+        msg.style.color="#ff7777";
+        msg.textContent=
+        "Error: "+error.message;
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>

@@ -3,65 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Sign Up | VØRKNYX MC</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
 
 body{
- min-height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
- color:white;
- background:
- linear-gradient(#000a,#000e),
- url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
- center/cover;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    color:white;
+    background:
+    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+    center/cover;
 }
 
 .box{
- width:92%;
- max-width:420px;
- padding:35px 28px;
- background:#111d;
- border:1px solid #333;
- border-radius:22px;
- backdrop-filter:blur(12px);
+    width:100%;
+    max-width:430px;
+    padding:35px 28px;
+    background:rgba(17,17,17,.9);
+    border:1px solid #333;
+    border-radius:22px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
 
-.logo{text-align:center;font-size:28px;font-weight:900}
-.sub{text-align:center;color:#999;margin:8px 0 25px}
+.logo{
+    text-align:center;
+    font-size:29px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.sub{
+    text-align:center;
+    color:#999;
+    margin-bottom:25px;
+}
 
 input{
- width:100%;
- padding:15px;
- margin-bottom:13px;
- border:0;
- outline:0;
- border-radius:12px;
- background:#222;
- color:white;
+    width:100%;
+    padding:15px;
+    margin-bottom:13px;
+    border:1px solid #333;
+    outline:none;
+    border-radius:12px;
+    background:#222;
+    color:white;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#777;
 }
 
 button{
- width:100%;
- padding:15px;
- border:0;
- border-radius:12px;
- font-weight:bold;
- cursor:pointer;
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.signup{background:white;color:black}
-.google{margin-top:12px;background:#222;color:white;border:1px solid #444}
+.signup{
+    background:white;
+    color:black;
+}
 
-.or{text-align:center;color:#777;margin:17px}
+.google{
+    margin-top:12px;
+    background:#222;
+    color:white;
+    border:1px solid #444;
+}
 
-.bottom{text-align:center;color:#999;margin-top:20px}
-.bottom a{color:white;text-decoration:none;font-weight:bold}
+.or{
+    text-align:center;
+    color:#777;
+    margin:18px 0;
+}
 
-#message{text-align:center;margin-top:15px;color:#ff7777;font-size:14px}
+.bottom{
+    text-align:center;
+    color:#999;
+    margin-top:22px;
+}
+
+.bottom a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+#message{
+    text-align:center;
+    margin-top:15px;
+    min-height:20px;
+    font-size:14px;
+    color:#ff7777;
+}
 </style>
 </head>
 
@@ -69,124 +121,337 @@ button{
 
 <div class="box">
 
-<div class="logo">⚡ VØRKNYX MC</div>
-<div class="sub">Create your account.</div>
+    <div class="logo">⚡ VØRKNYX MC</div>
 
-<input id="username" placeholder="Username">
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<input id="confirm" type="password" placeholder="Confirm Password">
+    <div class="sub">
+        Create your creator account.
+    </div>
 
-<button class="signup" id="signupBtn">
-CREATE ACCOUNT
-</button>
+    <input
+        id="username"
+        type="text"
+        placeholder="Username"
+    >
 
-<div class="or">OR</div>
+    <input
+        id="email"
+        type="email"
+        placeholder="Email"
+    >
 
-<button class="google" id="googleBtn">
-🔵 Continue with Google
-</button>
+    <input
+        id="password"
+        type="password"
+        placeholder="Password"
+    >
 
-<div id="message"></div>
+    <input
+        id="confirm"
+        type="password"
+        placeholder="Confirm Password"
+    >
 
-<div class="bottom">
-Already have an account?
-<a href="login.html">Login</a>
+    <button class="signup" id="signupBtn">
+        CREATE ACCOUNT
+    </button>
+
+    <div class="or">
+        OR
+    </div>
+
+    <button class="google" id="googleBtn">
+        🔵 Continue with Google
+    </button>
+
+    <div id="message"></div>
+
+    <div class="bottom">
+        Already have an account?
+        <a href="login.html">Login</a>
+    </div>
+
 </div>
 
-</div>
 
 <script type="module">
 
-import {initializeApp}
+import {
+    initializeApp
+}
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
+
 import {
-getAuth,
-createUserWithEmailAndPassword,
-updateProfile,
-GoogleAuthProvider,
-signInWithPopup
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    GoogleAuthProvider,
+    signInWithPopup
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-const firebaseConfig={
-apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
-authDomain:"vorknyx-mc.firebaseapp.com",
-projectId:"vorknyx-mc",
-storageBucket:"vorknyx-mc.firebasestorage.app",
-messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
-appId:"YOUR_APP_ID"
+const firebaseConfig = {
+    apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+    authDomain:"vorknyx-mc.firebaseapp.com",
+    projectId:"vorknyx-mc",
+    storageBucket:"vorknyx-mc.firebasestorage.app",
+
+    messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+
+    appId:"YOUR_APP_ID"
 };
 
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
+const app = initializeApp(firebaseConfig);
 
-const message=document.getElementById("message");
+const auth = getAuth(app);
+
+const message = document.getElementById("message");
 
 
-document.getElementById("signupBtn").onclick=async()=>{
+function showMessage(text,color){
 
-const username=document.getElementById("username").value.trim();
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-const confirm=document.getElementById("confirm").value;
+    message.textContent = text;
 
-if(!username||!email||!password||!confirm){
-message.textContent="Please fill all fields.";
-return;
+    message.style.color = color;
+
 }
 
-if(password!==confirm){
-message.textContent="Passwords do not match.";
-return;
-}
 
-if(password.length<6){
-message.textContent="Password must be at least 6 characters.";
-return;
-}
+// EMAIL SIGNUP
 
-try{
+document
+.getElementById("signupBtn")
+.addEventListener("click",async()=>{
 
-const result=await createUserWithEmailAndPassword(
-auth,email,password
-);
+    const username =
+    document.getElementById("username")
+    .value
+    .trim();
 
-await updateProfile(result.user,{
-displayName:username
+
+    const email =
+    document.getElementById("email")
+    .value
+    .trim();
+
+
+    const password =
+    document.getElementById("password")
+    .value;
+
+
+    const confirm =
+    document.getElementById("confirm")
+    .value;
+
+
+    if(
+        !username ||
+        !email ||
+        !password ||
+        !confirm
+    ){
+
+        showMessage(
+            "Please fill all fields.",
+            "#ff7777"
+        );
+
+        return;
+    }
+
+
+    if(password !== confirm){
+
+        showMessage(
+            "Passwords do not match.",
+            "#ff7777"
+        );
+
+        return;
+    }
+
+
+    if(password.length < 6){
+
+        showMessage(
+            "Password must contain at least 6 characters.",
+            "#ff7777"
+        );
+
+        return;
+    }
+
+
+    try{
+
+        showMessage(
+            "Creating your account...",
+            "#aaa"
+        );
+
+
+        const userCredential =
+        await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+
+        await updateProfile(
+            userCredential.user,
+            {
+                displayName:username
+            }
+        );
+
+
+        showMessage(
+            "Account created successfully! Redirecting...",
+            "#7cff8b"
+        );
+
+
+        setTimeout(()=>{
+
+            // IMPORTANT:
+            // Signup ke baad dashboard
+            window.location.href =
+            "dashboard.html";
+
+        },800);
+
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        if(
+            error.code ===
+            "auth/email-already-in-use"
+        ){
+
+            showMessage(
+                "This email is already registered.",
+                "#ff7777"
+            );
+
+        }
+
+        else if(
+            error.code ===
+            "auth/invalid-email"
+        ){
+
+            showMessage(
+                "Please enter a valid email.",
+                "#ff7777"
+            );
+
+        }
+
+        else if(
+            error.code ===
+            "auth/weak-password"
+        ){
+
+            showMessage(
+                "Password is too weak.",
+                "#ff7777"
+            );
+
+        }
+
+        else{
+
+            showMessage(
+                error.message,
+                "#ff7777"
+            );
+
+        }
+
+    }
+
 });
 
-location.href="dashboard.html";
 
-}catch(error){
+// GOOGLE SIGNUP
 
-message.textContent=error.message;
+document
+.getElementById("googleBtn")
+.addEventListener("click",async()=>{
 
-}
+    try{
 
-};
+        showMessage(
+            "Opening Google...",
+            "#aaa"
+        );
 
 
-document.getElementById("googleBtn").onclick=async()=>{
+        const provider =
+        new GoogleAuthProvider();
 
-try{
 
-const provider=new GoogleAuthProvider();
+        await signInWithPopup(
+            auth,
+            provider
+        );
 
-await signInWithPopup(auth,provider);
 
-location.href="dashboard.html";
+        showMessage(
+            "Google login successful! Redirecting...",
+            "#7cff8b"
+        );
 
-}catch(error){
 
-message.textContent=error.message;
+        setTimeout(()=>{
 
-}
+            // IMPORTANT:
+            // YAHAN feedback.html NAHI HAI
+            // DIRECT DASHBOARD HAI
 
-};
+            window.location.href =
+            "dashboard.html";
+
+        },800);
+
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        if(
+            error.code ===
+            "auth/popup-closed-by-user"
+        ){
+
+            showMessage(
+                "Google sign-in was cancelled.",
+                "#ff7777"
+            );
+
+        }
+
+        else{
+
+            showMessage(
+                error.message,
+                "#ff7777"
+            );
+
+        }
+
+    }
+
+});
 
 </script>
 

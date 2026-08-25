@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>VØRKNYX MC</title>
 
+
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -14,119 +20,192 @@
     font-family:Arial,sans-serif;
 }
 
+
 body{
+
     min-height:100vh;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     padding:20px;
 
     color:white;
 
     background:
-    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.9)),
+    linear-gradient(
+        rgba(0,0,0,.75),
+        rgba(0,0,0,.92)
+    ),
     url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
-    center/cover;
+    center/cover fixed;
+
 }
 
-.box{
+
+.container{
+
     width:100%;
-    max-width:600px;
-    padding:45px 30px;
+
+    max-width:550px;
+
+    padding:42px 28px;
 
     text-align:center;
 
-    background:rgba(17,17,17,.88);
+    background:rgba(15,15,15,.92);
+
     border:1px solid #333;
+
     border-radius:25px;
 
     backdrop-filter:blur(12px);
 
     box-shadow:
     0 20px 60px rgba(0,0,0,.6);
+
 }
+
 
 .logo{
-    font-size:42px;
+
+    font-size:40px;
+
     font-weight:900;
+
     letter-spacing:2px;
-    margin-bottom:12px;
+
+    margin-bottom:10px;
+
 }
+
 
 .subtitle{
+
     color:#999;
+
     margin-bottom:30px;
-    font-size:16px;
-}
-
-button{
-    width:100%;
-    max-width:380px;
-    padding:15px;
-
-    border:0;
-    border-radius:12px;
 
     font-size:15px;
+
+}
+
+
+button{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:13px;
+
+    font-size:15px;
+
     font-weight:bold;
 
     cursor:pointer;
+
     transition:.2s;
+
 }
+
 
 button:hover{
+
     transform:translateY(-2px);
+
 }
+
 
 .google{
+
     background:white;
+
     color:black;
+
 }
 
-.login{
+
+.email{
+
     margin-top:12px;
+
     background:#222;
+
     color:white;
+
     border:1px solid #444;
+
 }
+
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
 
 #message{
+
+    min-height:22px;
+
     margin-top:18px;
-    min-height:20px;
+
     font-size:14px;
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="box">
+
+<div class="container">
+
 
     <div class="logo">
+
         ⚡ VØRKNYX MC
+
     </div>
 
+
     <div class="subtitle">
+
         Lifesteal Network • Creator Portal
+
     </div>
 
 
     <!-- GOOGLE LOGIN -->
 
     <button
-        class="google"
-        id="googleBtn">
+        id="googleBtn"
+        class="google">
 
         🔵 Continue with Google
 
     </button>
 
 
-    <!-- NORMAL LOGIN -->
+    <!-- EMAIL LOGIN -->
 
     <button
-        class="login"
-        onclick="location.href='login.html'">
+        class="email"
+        onclick="window.location.href='login.html'">
 
         LOGIN WITH EMAIL
 
@@ -135,10 +214,18 @@ button:hover{
 
     <div id="message"></div>
 
+
 </div>
 
 
+
 <script type="module">
+
+
+/* =========================
+   FIREBASE
+   ========================= */
+
 
 import {
     initializeApp
@@ -154,26 +241,39 @@ import {
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-/*
-    SAME FIREBASE CONFIG
-    AS YOUR LOGIN/SIGNUP
-*/
+
+/* =========================
+   YOUR FIREBASE CONFIG
+   ========================= */
+
 
 const firebaseConfig = {
 
-    apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+    apiKey:
+    "AIzaSyDnCDPgXObekD5yM66S7bbVPmM7wBlxGro",
 
-    authDomain:"vorknyx-mc.firebaseapp.com",
+    authDomain:
+    "vorknyx-mc26.firebaseapp.com",
 
-    projectId:"vorknyx-mc",
+    projectId:
+    "vorknyx-mc26",
 
-    storageBucket:"vorknyx-mc.firebasestorage.app",
+    storageBucket:
+    "vorknyx-mc26.firebasestorage.app",
 
-    messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+    messagingSenderId:
+    "82503255053",
 
-    appId:"YOUR_APP_ID"
+    appId:
+    "1:82503255053:web:3e668302f9d20f98498144"
 
 };
+
+
+
+/* =========================
+   INITIALIZE FIREBASE
+   ========================= */
 
 
 const app =
@@ -184,34 +284,46 @@ const auth =
 getAuth(app);
 
 
+const provider =
+new GoogleAuthProvider();
+
+
+const googleBtn =
+document.getElementById("googleBtn");
+
+
 const message =
 document.getElementById("message");
 
 
-/*
-    GOOGLE LOGIN
-*/
 
-document
-.getElementById("googleBtn")
-.addEventListener("click",async()=>{
+/* =========================
+   GOOGLE LOGIN
+   ========================= */
+
+
+googleBtn.addEventListener(
+"click",
+async function(){
 
     try{
 
-        message.style.color="#aaa";
+        googleBtn.disabled = true;
 
-        message.textContent=
+        googleBtn.textContent =
         "Opening Google...";
 
 
-        const provider =
-        new GoogleAuthProvider();
+        message.style.color =
+        "#aaa";
+
+        message.textContent =
+        "Please choose your Google account.";
 
 
         /*
-            THIS IS THE SAME METHOD
-            THAT WORKS ON SIGNUP
-        */
+         * GOOGLE SIGN IN
+         */
 
         await signInWithPopup(
             auth,
@@ -219,26 +331,28 @@ document
         );
 
 
-        message.style.color="#7cff8b";
+        message.style.color =
+        "#7cff8b";
 
-        message.textContent=
+        message.textContent =
         "Login successful! Redirecting...";
 
 
+        /*
+         * GO DIRECTLY TO DASHBOARD
+         */
+
         setTimeout(()=>{
 
-            /*
-                IMPORTANT:
-                GO DIRECTLY TO DASHBOARD
-            */
-
-            window.location.href=
-            "dashboard.html";
+            window.location.replace(
+                "dashboard.html"
+            );
 
         },700);
 
 
     }
+
     catch(error){
 
         console.error(
@@ -247,7 +361,14 @@ document
         );
 
 
-        message.style.color="#ff7777";
+        googleBtn.disabled = false;
+
+        googleBtn.textContent =
+        "🔵 Continue with Google";
+
+
+        message.style.color =
+        "#ff7777";
 
 
         if(
@@ -255,25 +376,38 @@ document
             "auth/popup-closed-by-user"
         ){
 
-            message.textContent=
+            message.textContent =
             "Google login cancelled.";
 
         }
+
 
         else if(
             error.code ===
             "auth/popup-blocked"
         ){
 
-            message.textContent=
-            "Google popup was blocked. Please allow popups.";
+            message.textContent =
+            "Popup blocked. Please allow popups.";
 
         }
 
+
+        else if(
+            error.code ===
+            "auth/unauthorized-domain"
+        ){
+
+            message.textContent =
+            "This domain is not authorized in Firebase.";
+
+        }
+
+
         else{
 
-            message.textContent=
-            "Google Login Error: "+
+            message.textContent =
+            "Google Login Error: " +
             error.message;
 
         }
@@ -284,5 +418,7 @@ document
 
 </script>
 
+
 </body>
-</html>
+
+</html>    

@@ -1,254 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | VØRKNYX MC</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login | VØRKNYX MC</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
-        url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
-        center/cover no-repeat;
-      color: white;
-    }
+body{
+ min-height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ color:white;
+ background:
+ linear-gradient(#000a,#000e),
+ url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+ center/cover;
+}
 
-    .box {
-      width: 92%;
-      max-width: 420px;
-      padding: 35px 28px;
-      border-radius: 22px;
-      background: rgba(15,15,15,.82);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 20px 60px rgba(0,0,0,.6);
-      backdrop-filter: blur(12px);
-    }
+.box{
+ width:92%;
+ max-width:420px;
+ padding:35px 28px;
+ background:#111d;
+ border:1px solid #333;
+ border-radius:22px;
+ backdrop-filter:blur(12px);
+}
 
-    .logo {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      letter-spacing: 2px;
-    }
+.logo{text-align:center;font-size:28px;font-weight:900}
+.sub{text-align:center;color:#999;margin:8px 0 25px}
 
-    .subtitle {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 28px;
-    }
+input{
+ width:100%;
+ padding:15px;
+ margin-bottom:13px;
+ border:0;
+ outline:0;
+ border-radius:12px;
+ background:#222;
+ color:white;
+}
 
-    input {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 14px;
-      border: none;
-      outline: none;
-      border-radius: 12px;
-      background: #222;
-      color: white;
-      font-size: 15px;
-    }
+button{
+ width:100%;
+ padding:15px;
+ border:0;
+ border-radius:12px;
+ font-weight:bold;
+ cursor:pointer;
+}
 
-    input:focus {
-      border: 1px solid #777;
-    }
+.login{background:white;color:black}
+.google{margin-top:12px;background:#222;color:white;border:1px solid #444}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
+.or{text-align:center;color:#777;margin:17px}
 
-    .login-btn {
-      background: white;
-      color: black;
-    }
+.bottom{text-align:center;color:#999;margin-top:20px}
+.bottom a{color:white;text-decoration:none;font-weight:bold}
 
-    .google-btn {
-      background: #222;
-      color: white;
-      border: 1px solid #444;
-      margin-top: 12px;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      opacity: .9;
-    }
-
-    .or {
-      text-align: center;
-      color: #777;
-      margin: 18px 0;
-    }
-
-    .bottom {
-      text-align: center;
-      margin-top: 22px;
-      color: #aaa;
-    }
-
-    .bottom a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      color: #ff7777;
-    }
-  </style>
+#message{text-align:center;margin-top:15px;color:#ff7777;font-size:14px}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="box">
 
-    <div class="logo">⚡ VØRKNYX MC</div>
-    <div class="subtitle">Welcome back, player.</div>
+<div class="logo">⚡ VØRKNYX MC</div>
+<div class="sub">Welcome back, player.</div>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-    <button class="login-btn" id="loginBtn">
-      LOGIN
-    </button>
+<button class="login" id="loginBtn">LOGIN</button>
 
-    <div class="or">OR</div>
+<div class="or">OR</div>
 
-    <button class="google-btn" id="googleBtn">
-      🔵 Continue with Google
-    </button>
+<button class="google" id="googleBtn">
+🔵 Continue with Google
+</button>
 
-    <div id="message"></div>
+<div id="message"></div>
 
-    <div class="bottom">
-      Don't have an account?
-      <a href="signup.html">Create Account</a>
-    </div>
+<div class="bottom">
+Don't have an account?
+<a href="signup.html">Create Account</a>
+</div>
 
-  </div>
+</div>
 
-  <script type="module">
+<script type="module">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup
-    }
-    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {
+getAuth,
+signInWithEmailAndPassword,
+GoogleAuthProvider,
+signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
-      authDomain: "vorknyx-mc.firebaseapp.com",
-      projectId: "vorknyx-mc",
-      storageBucket: "vorknyx-mc.firebasestorage.app",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+const firebaseConfig={
+apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+authDomain:"vorknyx-mc.firebaseapp.com",
+projectId:"vorknyx-mc",
+storageBucket:"vorknyx-mc.firebasestorage.app",
+messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+appId:"YOUR_APP_ID"
+};
 
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
-    const message = document.getElementById("message");
-
-
-    // EMAIL LOGIN
-    document.getElementById("loginBtn").addEventListener("click", async () => {
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        message.textContent = "Please enter email and password.";
-        return;
-      }
-
-      try {
-
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-        message.style.color = "#7cff8b";
-        message.textContent = "Login successful!";
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 800);
-
-      } catch (error) {
-
-        console.error(error);
-
-        if (error.code === "auth/invalid-credential") {
-          message.textContent = "Wrong email or password.";
-        } else if (error.code === "auth/user-not-found") {
-          message.textContent = "Account not found.";
-        } else {
-          message.textContent = error.message;
-        }
-
-      }
-
-    });
+const message=document.getElementById("message");
 
 
-    // GOOGLE LOGIN
-    document.getElementById("googleBtn").addEventListener("click", async () => {
+document.getElementById("loginBtn").onclick=async()=>{
 
-      const provider = new GoogleAuthProvider();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
 
-      try {
+if(!email||!password){
+message.textContent="Please enter email and password.";
+return;
+}
 
-        await signInWithPopup(auth, provider);
+try{
 
-        message.style.color = "#7cff8b";
-        message.textContent = "Google login successful!";
+await signInWithEmailAndPassword(auth,email,password);
 
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 800);
+location.href="dashboard.html";
 
-      } catch (error) {
+}catch(error){
 
-        console.error(error);
-        message.textContent = error.message;
+message.textContent="Login failed: "+error.message;
 
-      }
+}
 
-    });
+};
 
-  </script>
+
+document.getElementById("googleBtn").onclick=async()=>{
+
+try{
+
+const provider=new GoogleAuthProvider();
+
+await signInWithPopup(auth,provider);
+
+location.href="dashboard.html";
+
+}catch(error){
+
+console.error(error);
+
+message.textContent=error.message;
+
+}
+
+};
+
+</script>
 
 </body>
 </html>

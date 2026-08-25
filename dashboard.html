@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | Vorknyx MC</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{min-height:100vh;color:white;background:linear-gradient(135deg,#070712,#111126)}
+
+nav{
+  padding:15px 7%;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid #24243b;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:20px}
+.logo{
+  width:42px;height:42px;border-radius:12px;display:flex;
+  justify-content:center;align-items:center;
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+}
+.logout{
+  border:0;background:#22223b;color:white;padding:10px 15px;
+  border-radius:10px;cursor:pointer;
+}
+.container{width:min(1000px,90%);margin:45px auto}
+.welcome{margin-bottom:25px}
+.welcome p{color:#9999ae;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{
+  background:#151529;border:1px solid #30304b;
+  padding:25px;border-radius:20px;
+}
+.profile{display:flex;align-items:center;gap:15px;margin-top:20px}
+.avatar{
+  width:65px;height:65px;border-radius:50%;object-fit:cover;
+  background:#7c3aed;
+}
+.email{color:#9999ae;font-size:14px;margin-top:5px}
+.status-box{
+  margin-top:20px;padding:15px;background:#0d0d1d;
+  border-radius:12px;
+}
+.label{color:#77778f;font-size:12px;margin-bottom:7px}
+.status{font-weight:bold;color:#facc15}
+.apply{
+  display:block;text-align:center;text-decoration:none;color:white;
+  margin-top:20px;padding:15px;border-radius:12px;
+  background:linear-gradient(90deg,#7c3aed,#2563eb);
+  font-weight:bold;
+}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="brand">
+    <div class="logo">V</div>
+    VORKNYX MC
+  </div>
+
+  <button class="logout" onclick="logoutUser()">Logout</button>
+</nav>
+
+<main class="container" id="dashboard" style="display:none">
+
+  <section class="welcome">
+    <h1>Welcome, <span id="welcomeName">Player</span> 👋</h1>
+    <p>Manage your Vorknyx MC staff application.</p>
+  </section>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>👤 Your Profile</h2>
+
+      <div class="profile">
+        <img class="avatar" id="photo" alt="Profile">
+
+        <div>
+          <h3 id="name">Loading...</h3>
+          <div class="email" id="email">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🛡️ Staff Application</h2>
+
+      <div class="status-box">
+        <div class="label">APPLICATION STATUS</div>
+        <div class="status" id="status">Not Applied</div>
+      </div>
+
+      <a class="apply" id="applyButton" href="apply.html">
+        APPLY FOR STAFF
+      </a>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnCDPgXObekD5yM66S7bbVPmM7wBlxGro",
+  authDomain: "vorknyx-mc26.firebaseapp.com",
+  projectId: "vorknyx-mc26",
+  storageBucket: "vorknyx-mc26.firebasestorage.app",
+  messagingSenderId: "82503255053",
+  appId: "1:82503255053:web:3e668302f9d20f98498144"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    window.location.href="login.html";
+    return;
+  }
+
+  const name=user.displayName || user.email.split("@")[0];
+
+  document.getElementById("welcomeName").textContent=name;
+  document.getElementById("name").textContent=name;
+  document.getElementById("email").textContent=user.email;
+
+  document.getElementById("photo").src =
+    user.photoURL ||
+    "https://ui-avatars.com/api/?name="+encodeURIComponent(name);
+
+  const q=query(
+    collection(db,"applications"),
+    where("userId","==",user.uid)
+  );
+
+  try{
+    const snap=await getDocs(q);
+
+    if(!snap.empty){
+      const application=snap.docs[0].data();
+
+      document.getElementById("status").textContent =
+        application.status || "Pending";
+
+      document.getElementById("applyButton").textContent =
+        "APPLICATION SUBMITTED";
+
+      document.getElementById("applyButton").href="#";
+    }
+  }catch(error){
+    console.log(error);
+  }
+
+  document.getElementById("dashboard").style.display="block";
+});
+
+window.logoutUser=async function(){
+  await signOut(auth);
+  window.location.href="index.html";
+};
+</script>
+
+</body>
+</html>

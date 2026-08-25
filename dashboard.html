@@ -2,181 +2,258 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | Vorknyx MC</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Dashboard | VØRKNYX MC</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{min-height:100vh;color:white;background:linear-gradient(135deg,#070712,#111126)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+
+body{
+ min-height:100vh;
+ color:white;
+ background:
+ linear-gradient(#000b,#000e),
+ url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+ center/cover fixed;
+}
 
 nav{
-  padding:15px 7%;display:flex;justify-content:space-between;
-  align-items:center;border-bottom:1px solid #24243b;
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 25px;
+ background:#090909dd;
+ border-bottom:1px solid #333;
 }
-.brand{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:20px}
-.logo{
-  width:42px;height:42px;border-radius:12px;display:flex;
-  justify-content:center;align-items:center;
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
-}
+
+.logo{font-size:22px;font-weight:900}
+
 .logout{
-  border:0;background:#22223b;color:white;padding:10px 15px;
-  border-radius:10px;cursor:pointer;
+ padding:10px 18px;
+ border:0;
+ border-radius:10px;
+ font-weight:bold;
+ cursor:pointer;
 }
-.container{width:min(1000px,90%);margin:45px auto}
-.welcome{margin-bottom:25px}
-.welcome p{color:#9999ae;margin-top:8px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+.container{
+ width:92%;
+ max-width:1000px;
+ margin:45px auto;
+}
+
+.welcome h1{font-size:34px}
+.welcome p{color:#999;margin-top:8px}
+
+.profile{
+ display:flex;
+ align-items:center;
+ gap:15px;
+ margin:30px 0;
+ padding:20px;
+ border:1px solid #333;
+ border-radius:18px;
+ background:#111d;
+}
+
+.profile img{
+ width:60px;
+ height:60px;
+ border-radius:50%;
+}
+
+.profile p{color:#999;font-size:14px;margin-top:5px}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:20px;
+}
+
 .card{
-  background:#151529;border:1px solid #30304b;
-  padding:25px;border-radius:20px;
+ padding:30px;
+ border-radius:20px;
+ background:#111d;
+ border:1px solid #333;
+ transition:.2s;
 }
-.profile{display:flex;align-items:center;gap:15px;margin-top:20px}
-.avatar{
-  width:65px;height:65px;border-radius:50%;object-fit:cover;
-  background:#7c3aed;
+
+.card:hover{
+ transform:translateY(-5px);
+ border-color:#777;
 }
-.email{color:#9999ae;font-size:14px;margin-top:5px}
-.status-box{
-  margin-top:20px;padding:15px;background:#0d0d1d;
-  border-radius:12px;
-}
-.label{color:#77778f;font-size:12px;margin-bottom:7px}
-.status{font-weight:bold;color:#facc15}
+
+.icon{font-size:42px;margin-bottom:15px}
+
+.card h2{margin-bottom:10px}
+.card p{color:#999;line-height:1.5;margin-bottom:20px}
+
 .apply{
-  display:block;text-align:center;text-decoration:none;color:white;
-  margin-top:20px;padding:15px;border-radius:12px;
-  background:linear-gradient(90deg,#7c3aed,#2563eb);
-  font-weight:bold;
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:12px;
+ font-weight:bold;
+ cursor:pointer;
 }
-@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+@media(max-width:650px){
+ .cards{grid-template-columns:1fr}
+ .welcome h1{font-size:27px}
+}
 </style>
 </head>
 
 <body>
 
 <nav>
-  <div class="brand">
-    <div class="logo">V</div>
-    VORKNYX MC
-  </div>
 
-  <button class="logout" onclick="logoutUser()">Logout</button>
+<div class="logo">⚡ VØRKNYX MC</div>
+
+<button class="logout" id="logout">
+LOGOUT
+</button>
+
 </nav>
 
-<main class="container" id="dashboard" style="display:none">
 
-  <section class="welcome">
-    <h1>Welcome, <span id="welcomeName">Player</span> 👋</h1>
-    <p>Manage your Vorknyx MC staff application.</p>
-  </section>
+<div class="container">
 
-  <div class="grid">
+<div class="welcome">
 
-    <div class="card">
-      <h2>👤 Your Profile</h2>
+<h1>
+Welcome, <span id="name">Player</span> 👋
+</h1>
 
-      <div class="profile">
-        <img class="avatar" id="photo" alt="Profile">
+<p>
+Choose an application below.
+</p>
 
-        <div>
-          <h3 id="name">Loading...</h3>
-          <div class="email" id="email">Loading...</div>
-        </div>
-      </div>
-    </div>
+</div>
 
-    <div class="card">
-      <h2>🛡️ Staff Application</h2>
 
-      <div class="status-box">
-        <div class="label">APPLICATION STATUS</div>
-        <div class="status" id="status">Not Applied</div>
-      </div>
+<div class="profile">
 
-      <a class="apply" id="applyButton" href="apply.html">
-        APPLY FOR STAFF
-      </a>
-    </div>
+<img id="avatar" src="https://via.placeholder.com/100">
 
-  </div>
+<div>
 
-</main>
+<h3 id="profileName">Loading...</h3>
+
+<p id="email">Loading...</p>
+
+</div>
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">📸</div>
+
+<h2>Media Apply</h2>
+
+<p>
+Apply for the VØRKNYX MC Media rank
+and become a creator for our community.
+</p>
+
+<button class="apply"
+onclick="location.href='media-apply.html'">
+
+APPLY FOR MEDIA
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">▶️</div>
+
+<h2>YouTube Apply</h2>
+
+<p>
+Have a YouTube channel?
+Apply for the YouTube creator rank.
+</p>
+
+<button class="apply"
+onclick="location.href='youtube-apply.html'">
+
+APPLY FOR YOUTUBE
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDnCDPgXObekD5yM66S7bbVPmM7wBlxGro",
-  authDomain: "vorknyx-mc26.firebaseapp.com",
-  projectId: "vorknyx-mc26",
-  storageBucket: "vorknyx-mc26.firebasestorage.app",
-  messagingSenderId: "82503255053",
-  appId: "1:82503255053:web:3e668302f9d20f98498144"
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+const firebaseConfig={
+apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+authDomain:"vorknyx-mc.firebaseapp.com",
+projectId:"vorknyx-mc",
+storageBucket:"vorknyx-mc.firebasestorage.app",
+messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+appId:"YOUR_APP_ID"
 };
+
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
-const db=getFirestore(app);
 
-onAuthStateChanged(auth,async user=>{
-  if(!user){
-    window.location.href="login.html";
-    return;
-  }
 
-  const name=user.displayName || user.email.split("@")[0];
+onAuthStateChanged(auth,user=>{
 
-  document.getElementById("welcomeName").textContent=name;
-  document.getElementById("name").textContent=name;
-  document.getElementById("email").textContent=user.email;
+if(!user){
+location.href="login.html";
+return;
+}
 
-  document.getElementById("photo").src =
-    user.photoURL ||
-    "https://ui-avatars.com/api/?name="+encodeURIComponent(name);
+const name=user.displayName||"Player";
 
-  const q=query(
-    collection(db,"applications"),
-    where("userId","==",user.uid)
-  );
+document.getElementById("name").textContent=name;
+document.getElementById("profileName").textContent=name;
+document.getElementById("email").textContent=user.email||"";
 
-  try{
-    const snap=await getDocs(q);
+if(user.photoURL){
+document.getElementById("avatar").src=user.photoURL;
+}
 
-    if(!snap.empty){
-      const application=snap.docs[0].data();
-
-      document.getElementById("status").textContent =
-        application.status || "Pending";
-
-      document.getElementById("applyButton").textContent =
-        "APPLICATION SUBMITTED";
-
-      document.getElementById("applyButton").href="#";
-    }
-  }catch(error){
-    console.log(error);
-  }
-
-  document.getElementById("dashboard").style.display="block";
 });
 
-window.logoutUser=async function(){
-  await signOut(auth);
-  window.location.href="index.html";
+
+document.getElementById("logout").onclick=async()=>{
+
+await signOut(auth);
+
+location.href="login.html";
+
 };
+
 </script>
 
 </body>

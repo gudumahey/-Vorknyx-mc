@@ -1,297 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | VØRKNYX MC</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sign Up | VØRKNYX MC</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
-        url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
-        center/cover no-repeat;
-      color: white;
-    }
+body{
+ min-height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ color:white;
+ background:
+ linear-gradient(#000a,#000e),
+ url("https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=2000&q=80")
+ center/cover;
+}
 
-    .box {
-      width: 92%;
-      max-width: 420px;
-      padding: 35px 28px;
-      border-radius: 22px;
-      background: rgba(15,15,15,.82);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 20px 60px rgba(0,0,0,.6);
-      backdrop-filter: blur(12px);
-    }
+.box{
+ width:92%;
+ max-width:420px;
+ padding:35px 28px;
+ background:#111d;
+ border:1px solid #333;
+ border-radius:22px;
+ backdrop-filter:blur(12px);
+}
 
-    .logo {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      letter-spacing: 2px;
-    }
+.logo{text-align:center;font-size:28px;font-weight:900}
+.sub{text-align:center;color:#999;margin:8px 0 25px}
 
-    .subtitle {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 28px;
-    }
+input{
+ width:100%;
+ padding:15px;
+ margin-bottom:13px;
+ border:0;
+ outline:0;
+ border-radius:12px;
+ background:#222;
+ color:white;
+}
 
-    input {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 14px;
-      border: none;
-      outline: none;
-      border-radius: 12px;
-      background: #222;
-      color: white;
-      font-size: 15px;
-    }
+button{
+ width:100%;
+ padding:15px;
+ border:0;
+ border-radius:12px;
+ font-weight:bold;
+ cursor:pointer;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
+.signup{background:white;color:black}
+.google{margin-top:12px;background:#222;color:white;border:1px solid #444}
 
-    .signup-btn {
-      background: white;
-      color: black;
-    }
+.or{text-align:center;color:#777;margin:17px}
 
-    .google-btn {
-      background: #222;
-      color: white;
-      border: 1px solid #444;
-      margin-top: 12px;
-    }
+.bottom{text-align:center;color:#999;margin-top:20px}
+.bottom a{color:white;text-decoration:none;font-weight:bold}
 
-    .or {
-      text-align: center;
-      color: #777;
-      margin: 18px 0;
-    }
-
-    .bottom {
-      text-align: center;
-      margin-top: 22px;
-      color: #aaa;
-    }
-
-    .bottom a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      color: #ff7777;
-    }
-  </style>
+#message{text-align:center;margin-top:15px;color:#ff7777;font-size:14px}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="box">
 
-    <div class="logo">⚡ VØRKNYX MC</div>
-    <div class="subtitle">Create your player account.</div>
+<div class="logo">⚡ VØRKNYX MC</div>
+<div class="sub">Create your account.</div>
 
-    <input type="text" id="username" placeholder="Username">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+<input id="username" placeholder="Username">
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<input id="confirm" type="password" placeholder="Confirm Password">
 
-    <button class="signup-btn" id="signupBtn">
-      CREATE ACCOUNT
-    </button>
+<button class="signup" id="signupBtn">
+CREATE ACCOUNT
+</button>
 
-    <div class="or">OR</div>
+<div class="or">OR</div>
 
-    <button class="google-btn" id="googleBtn">
-      🔵 Continue with Google
-    </button>
+<button class="google" id="googleBtn">
+🔵 Continue with Google
+</button>
 
-    <div id="message"></div>
+<div id="message"></div>
 
-    <div class="bottom">
-      Already have an account?
-      <a href="login.html">Login</a>
-    </div>
+<div class="bottom">
+Already have an account?
+<a href="login.html">Login</a>
+</div>
 
-  </div>
+</div>
 
+<script type="module">
 
-  <script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      updateProfile
-    }
-    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
-      authDomain: "vorknyx-mc.firebaseapp.com",
-      projectId: "vorknyx-mc",
-      storageBucket: "vorknyx-mc.firebasestorage.app",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+import {
+getAuth,
+createUserWithEmailAndPassword,
+updateProfile,
+GoogleAuthProvider,
+signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const message = document.getElementById("message");
-
-
-    // SIGN UP
-    document.getElementById("signupBtn").addEventListener("click", async () => {
-
-      const username =
-        document.getElementById("username").value.trim();
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      const password =
-        document.getElementById("password").value;
-
-      const confirmPassword =
-        document.getElementById("confirmPassword").value;
+const firebaseConfig={
+apiKey:"AIzaSyDvMGqwwdvjxMSG9ASZLJinrsQ9qsY5rrI",
+authDomain:"vorknyx-mc.firebaseapp.com",
+projectId:"vorknyx-mc",
+storageBucket:"vorknyx-mc.firebasestorage.app",
+messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+appId:"YOUR_APP_ID"
+};
 
 
-      if (!username || !email || !password || !confirmPassword) {
-        message.textContent = "Please fill all fields.";
-        return;
-      }
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+const message=document.getElementById("message");
 
 
-      if (password !== confirmPassword) {
-        message.textContent = "Passwords do not match.";
-        return;
-      }
+document.getElementById("signupBtn").onclick=async()=>{
+
+const username=document.getElementById("username").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+const confirm=document.getElementById("confirm").value;
+
+if(!username||!email||!password||!confirm){
+message.textContent="Please fill all fields.";
+return;
+}
+
+if(password!==confirm){
+message.textContent="Passwords do not match.";
+return;
+}
+
+if(password.length<6){
+message.textContent="Password must be at least 6 characters.";
+return;
+}
+
+try{
+
+const result=await createUserWithEmailAndPassword(
+auth,email,password
+);
+
+await updateProfile(result.user,{
+displayName:username
+});
+
+location.href="dashboard.html";
+
+}catch(error){
+
+message.textContent=error.message;
+
+}
+
+};
 
 
-      if (password.length < 6) {
-        message.textContent =
-          "Password must be at least 6 characters.";
-        return;
-      }
+document.getElementById("googleBtn").onclick=async()=>{
 
+try{
 
-      try {
+const provider=new GoogleAuthProvider();
 
-        const userCredential =
-          await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
+await signInWithPopup(auth,provider);
 
+location.href="dashboard.html";
 
-        await updateProfile(
-          userCredential.user,
-          {
-            displayName: username
-          }
-        );
+}catch(error){
 
+message.textContent=error.message;
 
-        message.style.color = "#7cff8b";
-        message.textContent =
-          "Account created successfully!";
+}
 
+};
 
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 1000);
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        if (error.code === "auth/email-already-in-use") {
-          message.textContent =
-            "This email is already registered.";
-        }
-        else if (error.code === "auth/invalid-email") {
-          message.textContent =
-            "Invalid email address.";
-        }
-        else if (error.code === "auth/weak-password") {
-          message.textContent =
-            "Password is too weak.";
-        }
-        else {
-          message.textContent = error.message;
-        }
-
-      }
-
-    });
-
-
-    // GOOGLE SIGN UP / LOGIN
-    document.getElementById("googleBtn").addEventListener("click", async () => {
-
-      const provider = new GoogleAuthProvider();
-
-      try {
-
-        await signInWithPopup(auth, provider);
-
-        message.style.color = "#7cff8b";
-        message.textContent =
-          "Google account connected!";
-
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 800);
-
-
-      } catch (error) {
-
-        console.error(error);
-        message.textContent = error.message;
-
-      }
-
-    });
-
-  </script>
+</script>
 
 </body>
 </html>
